@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const schema = require('./auth/users.js');
 const Collection = require('./collection.js');
+const auth = require('./BasicAuthentication.js');
 const db = new Collection(schema);
 
 router.post('/signup', (req,res,next) => {
@@ -19,8 +20,12 @@ router.post('/signup', (req,res,next) => {
   }
 })
 
-router.post('/signin', (req,res,next)=> {
-
+router.post('/signin', auth, (req,res,next)=> {
+  try {
+    res.json(req.body)
+  } catch (error) {
+    next(error);
+  }
 })
 
 module.exports = router;

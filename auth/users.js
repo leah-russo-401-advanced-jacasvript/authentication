@@ -18,14 +18,14 @@ usersSchema.statics.basicAuth = function(username,password) {
   })
 }
 
-usersSchema.statics.comparePassword = function(passwordOne,passwordTwo,obj) {
-  const compare = bcrypt.compare(passwordOne,passwordTwo);
+usersSchema.statics.comparePassword = function(password,passwordTwo,obj) {
+  const compare = bcrypt.compare(password,passwordTwo);
   if(compare) {
     return obj;
   } else {
     return null;
   }
-}(
+}
 
 usersSchema.statics.token = function(username) {
   return jwt.sign({ username: username}, 'SECRET_STRING');
