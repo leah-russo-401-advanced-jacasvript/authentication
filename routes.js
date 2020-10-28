@@ -25,7 +25,7 @@ router.post('/signup', (req,res,next) => {
 
 router.post('/signin', auth.basic, (req,res,next)=> {
   try {
-    res.json(req.body)
+    res.json(req.body.token)
   } catch (error) {
     next(error);
   }

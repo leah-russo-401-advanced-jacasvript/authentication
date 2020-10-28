@@ -12,7 +12,7 @@ const usersSchema = new mongoose.Schema({
 
 usersSchema.statics.basicAuth = function(username,password) {
   console.log(username,password);
-  return this.find({'username': 'someuser'})
+  return this.findOne({'username': username })
   .then(results => {
     console.log(results);
     return this.comparePassword(password,results.password,results)
