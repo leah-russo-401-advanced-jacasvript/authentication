@@ -11,20 +11,28 @@ const usersSchema = new mongoose.Schema({
 });
 
 usersSchema.statics.basicAuth = function(username,password) {
-  return this.findOne({ username: username})
-  .then(results=> {
+  console.log(username,password);
+  return this.find({'username': 'someuser'})
+  .then(results => {
+    console.log(results);
     return this.comparePassword(password,results.password,results)
     
   })
 }
 
 usersSchema.statics.comparePassword = function(password,passwordTwo,obj) {
-  const compare = bcrypt.compare(password,passwordTwo);
-  if(compare) {
-    return obj;
-  } else {
-    return null;
-  }
+  console.log(password)
+  console.log(typeof(password));
+  return bcrypt.compare(password,passwordTwo)
+  .then(results => {
+    console.log(results);
+    console.log(obj);
+    if(results) {
+      return obj;
+    } else {
+      return null;
+    }
+  })
 }
 
 usersSchema.statics.token = function(username) {

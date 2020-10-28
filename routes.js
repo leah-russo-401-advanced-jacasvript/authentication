@@ -6,12 +6,14 @@ const schema = require('./auth/users.js');
 const Collection = require('./collection.js');
 const auth = require('./BasicAuthentication.js');
 const db = new Collection(schema);
+const base64 = require('base-64');
 
 router.post('/signup', (req,res,next) => {
-  //idk what goes here
   try {
+    console.log(req.body);
     db.create(req.body)
     .then(results => {
+      console.log(results)
       res.json(results);
       next();
     })
@@ -20,7 +22,8 @@ router.post('/signup', (req,res,next) => {
   }
 })
 
-router.post('/signin', auth, (req,res,next)=> {
+
+router.post('/signin', auth.basic, (req,res,next)=> {
   try {
     res.json(req.body)
   } catch (error) {
