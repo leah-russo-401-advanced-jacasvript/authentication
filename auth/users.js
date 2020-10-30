@@ -36,7 +36,8 @@ usersSchema.statics.comparePassword = function(password,passwordTwo,obj) {
 }
 
 usersSchema.statics.token = function(username) {
-  return jwt.sign({ username: username}, 'SECRET_STRING');
+  let token =  jwt.sign({ username: username}, 'SECRET_STRING');
+  return token;
 }
 
 module.exports = mongoose.model('Users',usersSchema);
