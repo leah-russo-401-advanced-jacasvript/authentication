@@ -31,13 +31,18 @@ module.exports = {
       const decodedPass = base64.decode(encodedPass);
       const [user, pass] = decodedPass.split(':');
 
-      let userObj = await model.basicAuth(user, pass);
-      console.log("this is the oser obj" + userObj);
-      if(userObj) {
-        req.body.token = model.token(userObj.username)
+      return model.basicAuth(user, pass)
+      .then(results => {
+        console.log( `this is the result ${results}`)
+        if(results) {
+          req.body.token = model.token(results.username)
+          next();
+        }
+        else {
+          next('user not valid');
+        }
+      })
 
-      }
-      next();
     } else {
       next('Unautorized');
     }

@@ -10,6 +10,7 @@ const base64 = require('base-64');
 
 router.post('/signup', (req,res,next) => {
   try {
+    console.log(req.body.token);
     console.log(req.body);
     db.create(req.body)
     .then(results => {
