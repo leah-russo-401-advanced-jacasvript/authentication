@@ -31,9 +31,18 @@ module.exports = {
       const decodedPass = base64.decode(encodedPass);
       const [user, pass] = decodedPass.split(':');
 
-      let token = await model.basicAuth(user, pass);
-      req.token = token;
-      next();
+      return model.basicAuth(user, pass)
+      .then(results => {
+        console.log( `this is the result ${results}`)
+        if(results) {
+          req.body.token = model.token(results.username)
+          next();
+        }
+        else {
+          next('user not valid');
+        }
+      })
+
     } else {
       next('Unautorized');
     }

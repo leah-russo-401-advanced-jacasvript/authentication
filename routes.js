@@ -10,6 +10,7 @@ const base64 = require('base-64');
 
 router.post('/signup', (req,res,next) => {
   try {
+    console.log(req.body.token);
     console.log(req.body);
     db.create(req.body)
     .then(results => {
@@ -25,7 +26,7 @@ router.post('/signup', (req,res,next) => {
 
 router.post('/signin', auth.basic, (req,res,next)=> {
   try {
-    res.json(req.body)
+    res.json(req.body.token)
   } catch (error) {
     next(error);
   }
